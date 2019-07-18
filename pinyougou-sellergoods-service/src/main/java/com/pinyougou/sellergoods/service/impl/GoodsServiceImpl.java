@@ -196,22 +196,28 @@ public class GoodsServiceImpl implements GoodsService {
 	@Override
 	public void delete(Long[] ids) {
 		for(Long id:ids){
-			goodsMapper.deleteByPrimaryKey(id);
+//			goodsMapper.deleteByPrimaryKey(id);
+			// 逻辑删除
+			TbGoods goods = goodsMapper.selectByPrimaryKey(id);
+			goods.setIsDelete("1");
+			goodsMapper.updateByPrimaryKey(goods);
 		}		
 	}
 	
 	
-		@Override
+	@Override
 	public PageResult findPage(TbGoods goods, int pageNum, int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
 		
 		TbGoodsExample example=new TbGoodsExample();
 		Criteria criteria = example.createCriteria();
+		criteria.andIsDeleteIsNull();//指定条件为未逻辑删除记录
 		
 		if(goods!=null){			
 						if(goods.getSellerId()!=null && goods.getSellerId().length()>0){
 //				criteria.andSellerIdLike("%"+goods.getSellerId()+"%");
 							criteria.andSellerIdEqualTo(goods.getSellerId());		
+							
 			}
 			if(goods.getGoodsName()!=null && goods.getGoodsName().length()>0){
 				criteria.andGoodsNameLike("%"+goods.getGoodsName()+"%");

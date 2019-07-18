@@ -9,9 +9,11 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.pinyougou.mapper.TbBrandMapper;
+import com.pinyougou.mapper.TbGoodsMapper;
 import com.pinyougou.pojo.TbBrand;
 import com.pinyougou.pojo.TbBrandExample;
 import com.pinyougou.pojo.TbBrandExample.Criteria;
+import com.pinyougou.pojo.TbGoods;
 import com.pinyougou.sellergoods.service.BrandService;
 
 import entity.PageResult;
@@ -27,6 +29,9 @@ public class BrandServiceImpl implements BrandService {
 
 	@Autowired
 	private TbBrandMapper brandMapper;
+	
+	@Autowired
+	private TbGoodsMapper goodsMapper;
 	
 	/**
 	 * 查询全部
@@ -72,7 +77,8 @@ public class BrandServiceImpl implements BrandService {
 	public TbBrand findOne(Long id){
 		return brandMapper.selectByPrimaryKey(id);
 	}
-
+	
+	
 	/**
 	 * 批量删除
 	 */
@@ -80,6 +86,7 @@ public class BrandServiceImpl implements BrandService {
 	public void delete(Long[] ids) {
 		for(Long id:ids){
 			brandMapper.deleteByPrimaryKey(id);
+			
 		}		
 	}
 	

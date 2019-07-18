@@ -1,3 +1,4 @@
 /pinyougou-solr-util/target
 .settings
 target
+/pinyougou-search-interface/*.classpath
